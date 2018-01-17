@@ -11,6 +11,12 @@ import UIKit
 var items = ["Sky diving", "Live in Hawaii"]
 
 class BucketListViewController: UITableViewController, AddItemTableViewControllerDelegate {
+    
+    
+    
+    
+    
+    
     // Add new item
     func addItemViewController(_ controller: AddItemTableViewController, didFinishAddingItem item: String, at indexPath: NSIndexPath?) {
         print("in BucketListViewController > didFinishAddingItem")
@@ -29,37 +35,61 @@ class BucketListViewController: UITableViewController, AddItemTableViewControlle
         dismiss(animated: true, completion: nil)
     }
     
-    // Add new mission or edit preexiting one
+    // segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Add new
-        if segue.identifier == "AddNewMission" {
-            let navigationController = segue.destination as! UINavigationController
-            let addItemTableViewController = navigationController.topViewController as! AddItemTableViewController
-            addItemTableViewController.delegate = self
-        }
         
-        // Edit list item
-        else if segue.identifier == "EditItemSegue" {
-            
-            let navigationController = segue.destination as! UINavigationController
-            let addItemTableViewController = navigationController.topViewController as! AddItemTableViewController
-            addItemTableViewController.delegate = self
-            
-            let indexPath = sender as! NSIndexPath
+    // refactored version
+        let navigationController = segue.destination as! UINavigationController
+        let addItemTableViewController = navigationController.topViewController as! AddItemTableViewController
+        
+        // Set self as Destination Delegate
+        addItemTableViewController.delegate = self
+        
+        // Set item/IndexPath using sender
+        if let indexPath = sender as? NSIndexPath {
             let item = items[indexPath.row]
             addItemTableViewController.item = item
             addItemTableViewController.indexPath = indexPath
         }
+        
     }
+    
+    // edit item when icon is tapped
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        performSegue(withIdentifier: "MissionSegue", sender: indexPath)
+    }
+    
+ /* -------------------------
+ 
+ crUD version with two segues
+ 
+ ---------------------------*/
+//        // Add new
+//        if segue.identifier == "AddNewMission" {
+//            let navigationController = segue.destination as! UINavigationController
+//            let addItemTableViewController = navigationController.topViewController as! AddItemTableViewController
+//            addItemTableViewController.delegate = self
+//        }
+//
+//        // Edit list item
+//        else if segue.identifier == "EditItemSegue" {
+//
+//            let navigationController = segue.destination as! UINavigationController
+//            let addItemTableViewController = navigationController.topViewController as! AddItemTableViewController
+//            addItemTableViewController.delegate = self
+//
+//            let indexPath = sender as! NSIndexPath
+//            let item = items[indexPath.row]
+//            addItemTableViewController.item = item
+//            addItemTableViewController.indexPath = indexPath
+//        }
+  
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("selected")
     }
     
-    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        performSegue(withIdentifier: "EditItemSegue", sender: indexPath)
-    }
-    
+    // remove item
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         items.remove(at: indexPath.row)
         tableView.reloadData()

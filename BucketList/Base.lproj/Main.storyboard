@@ -36,13 +36,10 @@
                     <navigationItem key="navigationItem" title="Bucket List" id="ToP-aq-jdZ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="u9O-hD-Tu8">
                             <connections>
-                                <segue destination="kDd-Hn-X0B" kind="presentation" identifier="AddNewMission" id="gfu-s3-jOL"/>
+                                <segue destination="kDd-Hn-X0B" kind="presentation" identifier="MissionSegue" id="gfu-s3-jOL"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="kDd-Hn-X0B" kind="presentation" identifier="EditItemSegue" id="y7z-MI-lHb"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8tm-qV-Qdk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -146,7 +143,4 @@
             <point key="canvasLocation" x="665" y="-4451"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="y7z-MI-lHb"/>
-    </inferredMetricsTieBreakers>
 </document>
